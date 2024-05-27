@@ -1,9 +1,0 @@
-2024/05/27 08:52:14 [notice] 1#1: using the "epoll" event method
-2024/05/27 08:52:14 [notice] 1#1: nginx/1.26.0
-2024/05/27 08:52:14 [notice] 1#1: built by gcc 13.2.1 20231014 (Alpine 13.2.1_git20231014) 
-2024/05/27 08:52:14 [notice] 1#1: OS: Linux 6.6.16-linuxkit
-2024/05/27 08:52:14 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
-2024/05/27 08:52:14 [notice] 1#1: start worker processes
-2024/05/27 08:52:14 [notice] 1#1: start worker process 29
-2024/05/27 08:52:14 [notice] 1#1: start worker process 30
-2024/05/27 08:52:41 [error] 30#30: *2 open() "/usr/share/nginx/html/favicon.ico" failed (2: No such file or directory), client: 192.168.65.1, server: localhost, request: "GET /favicon.ico HTTP/1.1", host: "0.0.0.0:8080", referrer: "http://0.0.0.0:8080/"
