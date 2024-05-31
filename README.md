@@ -35,6 +35,7 @@ Monitoring NGINX logs using FLG Stack (Fluent-bit, Loki, Grafana) with Docker an
 │   ├── namespace.yaml
 │   └── nginx
 │       └── deployment.yaml
+│       └── pvc.yaml
 │       └── service.yaml
 └── loki
     └── loki-config.yml
@@ -106,11 +107,13 @@ docker run -d \
 # Create Namespace
 kubectl apply -f kubernetes/namespace.yaml
 # NGINX
+kubectl apply -f kubernetes/nginx/pvc.yaml
 kubectl apply -f kubernetes/nginx/deployment.yaml
 kubectl apply -f kubernetes/nginx/service.yaml
 # Loki
 kubectl apply -f kubernetes/loki/configmap.yaml
 kubectl apply -f kubernetes/loki/pvc.yaml
+kubectl apply -f kubernetes/loki/service.yaml
 kubectl apply -f kubernetes/loki/statefulset.yaml
 # Grafana
 kubectl apply -f kubernetes/grafana/configmap.yaml

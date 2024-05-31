@@ -33,5 +33,5 @@ spec:
             periodSeconds: 10
       volumes:
         - name: nginx-logs
-          hostPath:
-            path: /var/log/nginx
+          persistentVolumeClaim:
+            claimName: nginx-log-pvc
