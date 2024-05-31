@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: fluenbit
+  namespace: monitoring
+  labels:
+    app: fluentbit
+spec:
+  selector:
+    matchLabels:
+      app: fluentbit
+  template:
+    metadata:
+      labels:
+        app: fluentbit
+    spec:
+      containers:
+        - name: fluentbit
+          image: docker.io/fluent/fluent-bit:3.0.6
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: fluent-bit-config
+              mountPath: /fluent-bit/etc/fluent-bit.conf
+              subPath: fluent-bit.conf
+            - name: fluent-bit-parsers
+              mountPath: /fluent-bit/parsers.conf
+              subPath: parsers.conf
+            - name: nginx-logs
+              mountPath: /var/log/nginx
+          command:
+            - "/fluent-bit/bin/fluent-bit"
+            - "-c"
+            - "/fluent-bit/etc/fluent-bit.conf"
+            - "-R"
+            - "/fluent-bit/parsers.conf"
+      volumes:
+        - name: fluent-bit-config
+          configMap:
+            name: fluenbit-config
+        - name: fluent-bit-parsers
+          configMap:
+            name: fluenbit-config
+        - name: nginx-logs
+          hostPath:
+            path: /var/log/nginx

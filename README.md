@@ -3,7 +3,47 @@ Log Monitoring with Fluent-bit, Loki, Grafana
 
 ![The Flow of FLG Stack !](/assets/flow.gif "The Flow of FLG Stack ")
 
+## Directory Structure
+```bash
+.
+├── LICENSE
+├── README.md
+├── assets
+│   ├── dashboard.png
+│   └── flow.gif
+├── docker-compose.yaml
+├── fluentbit
+│   ├── fluent-bit.conf
+│   └── parsers.conf
+├── grafana
+│   ├── datasource.yml
+│   └── grafana.ini
+├── kubernetes
+│   ├── fluentbit
+│   │   ├── configmap.yaml
+│   │   └── daemonset.yaml
+│   ├── grafana
+│   │   ├── configmap.yaml
+│   │   ├── deployment.yaml
+│   │   ├── pvc.yaml
+│   │   └── service.yaml
+│   ├── loki
+│   │   ├── configmap.yaml
+│   │   ├── pvc.yaml
+│   │   └── service.yaml
+│   │   ├── statefulset.yaml
+│   ├── namespace.yaml
+│   └── nginx
+│       └── deployment.yaml
+│       └── service.yaml
+└── loki
+    └── loki-config.yml
+```
+
 ## Create Docker Network and Volume
+This the step to create docker network and volume.
+Why the network use bridge driver? because we want to use the default driver.
+Why the volume use local driver? because we want to store the data in local machine.
 ```bash
 docker network create flg-network --driver bridge
 docker volume create loki_data --driver local
@@ -59,6 +99,27 @@ docker run -d \
     fluent-bit \
     -c /fluent-bit/etc/fluent-bit.conf \
     -R /fluent-bit/parsers.conf
+```
+
+## Run in Kubernetes
+```bash
+# Create Namespace
+kubectl apply -f kubernetes/namespace.yaml
+# NGINX
+kubectl apply -f kubernetes/nginx/deployment.yaml
+kubectl apply -f kubernetes/nginx/service.yaml
+# Loki
+kubectl apply -f kubernetes/loki/configmap.yaml
+kubectl apply -f kubernetes/loki/pvc.yaml
+kubectl apply -f kubernetes/loki/statefulset.yaml
+# Grafana
+kubectl apply -f kubernetes/grafana/configmap.yaml
+kubectl apply -f kubernetes/grafana/pvc.yaml
+kubectl apply -f kubernetes/grafana/deployment.yaml
+kubectl apply -f kubernetes/grafana/service.yaml
+# Fluent-bit
+kubectl apply -f kubernetes/fluentbit/configmap.yaml
+kubectl apply -f kubernetes/fluentbit/daemonset.yaml
 ```
 
 ## Access Grafana
