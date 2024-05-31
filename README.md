@@ -1,5 +1,5 @@
 # FLG Monitoring Stack
-Log Monitoring with Fluent-bit, Loki, Grafana
+Monitoring NGINX logs using FLG Stack (Fluent-bit, Loki, Grafana) with Docker and Kubernetes
 
 ![The Flow of FLG Stack !](/assets/flow.gif "The Flow of FLG Stack ")
 
